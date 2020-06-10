@@ -13,6 +13,16 @@ Bank.prototype.assignId = function(account) {
     return this.currentId += 1;
 }
 
+Bank.prototype.findAccount = function(id) {
+    for (let i = 0; i <= this.accounts.length; i++) {
+        if(this.accounts[i]) {
+            if (this.accounts[i] == id) {
+                return this.accounts[i];
+            }
+        }
+    }
+}
+
 
 // Business logic for accounts
 function Account(name, initialDeposit) {
@@ -21,11 +31,13 @@ function Account(name, initialDeposit) {
 }
 
 Account.prototype.withdraw = function(amount) {
-    return this.initialDeposit - amount;
+    let newBalance = this.initialDeposit - amount;
+    return newBalance;
 }
 
 Account.prototype.deposit = function(amount) {
-    return this.initialDeposit + amount;
+    let newBalance = this.initialDeposit + amount;
+    return newBalance;
 }
 
 // UI logic for accounts
@@ -40,6 +52,19 @@ function displayAccountDetails(bankToDisplay) {
     });
     accountsList.html(htmlForAccountInfo);
 }
+
+function showAccount(accountId) {
+    const account = bank.findAccount(accountId);
+    $("#balance").show();
+    
+    $(".name").html(account.name);
+    $(".balance").html(account.initialDeposit);
+
+    let buttons = $("#buttons");
+    buttons.empty();
+    buttons.append("<button class='deleteButton btn-danger' id=" + contact.id + ">Delete</button>");
+}
+
 
 $(document).ready(function() {
     $("form#new-account").submit(function(event) {
