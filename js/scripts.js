@@ -16,7 +16,7 @@ Bank.prototype.assignId = function(account) {
 Bank.prototype.findAccount = function(id) {
     for (let i = 0; i <= this.accounts.length; i++) {
         if(this.accounts[i]) {
-            if (this.accounts[i] == id) {
+            if (this.accounts[i].id == id) {
                 return this.accounts[i];
             }
         }
@@ -55,6 +55,8 @@ function displayAccountDetails(bankToDisplay) {
 
 function showAccount(accountId) {
     const account = bank.findAccount(accountId);
+    console.log(account);
+    
     $("#balance").show();
     
     $(".name").html(account.name);
@@ -62,11 +64,19 @@ function showAccount(accountId) {
 
     let buttons = $("#buttons");
     buttons.empty();
-    buttons.append("<button class='deleteButton btn-danger' id=" + contact.id + ">Delete</button>");
+    buttons.append("<button class='deleteButton btn-danger' id=" + account.id + ">Delete</button>");
+}
+
+function attachAccountListeners() {
+    $("ul#accounts").on("click", "li", function() {
+        console.log(this.id);
+        showAccount(this.id);
+    });
 }
 
 
 $(document).ready(function() {
+    attachAccountListeners();
     $("form#new-account").submit(function(event) {
         event.preventDefault();
 
