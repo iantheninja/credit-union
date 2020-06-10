@@ -29,6 +29,30 @@ Account.prototype.deposit = function(amount) {
 }
 
 // UI logic for accounts
+let bank = new Bank();
+
+function displayAccountDetails(bankToDisplay) {
+    let accountsList = $("ul#accounts");
+    let htmlForAccountInfo = "";
+
+    bankToDisplay.accounts.forEach(function(account) {
+        htmlForAccountInfo += "<li id=" + account.id + ">" + account.name + "</li>"
+    });
+    accountsList.html(htmlForAccountInfo);
+}
+
 $(document).ready(function() {
-    
+    $("form#new-account").submit(function(event) {
+        event.preventDefault();
+
+        const inputtedName = $("input#name").val();
+        const inputtedInitialDeposit = $("input#initial-deposit").val();
+
+        $("input#name").val("");
+        $("input#initial-deposit").val("");
+
+        let newAccount = new Account(inputtedName, inputtedInitialDeposit);
+        bank.addAccount(newAccount);
+        displayAccountDetails(bank);      
+    })
 })
