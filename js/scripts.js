@@ -23,6 +23,17 @@ Bank.prototype.findAccount = function(id) {
     }
 }
 
+Bank.prototype.deleteAccount = function(id) {
+    for (let i = 0; i <= this.accounts.length; i++) {
+        if(this.accounts[i]) {
+            if (this.accounts[i].id == id) {
+                delete this.accounts[i];
+                return true;
+            }
+        }
+    }
+}
+
 
 // Business logic for accounts
 function Account(name, initialDeposit) {
@@ -54,9 +65,7 @@ function displayAccountDetails(bankToDisplay) {
 }
 
 function showAccount(accountId) {
-    const account = bank.findAccount(accountId);
-    console.log(account);
-    
+    const account = bank.findAccount(accountId); 
     $("#balance").show();
     
     $(".name").html(account.name);
@@ -73,6 +82,12 @@ function attachAccountListeners() {
         showAccount(this.id);
     });
 }
+
+$("#buttons").on("click", ".deleteButton", function() {
+    bank.deleteAccount(this.id)
+    $("#balance").hide();
+    displayAccountDetails(bank);
+});
 
 
 $(document).ready(function() {
