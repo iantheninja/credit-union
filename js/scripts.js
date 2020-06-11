@@ -78,7 +78,6 @@ function showAccount(accountId) {
 
 function attachAccountListeners() {
     $("ul#accounts").on("click", "li", function() {
-        console.log(this.id);
         showAccount(this.id);
     });
 }
@@ -104,5 +103,5 @@ $(document).ready(function() {
         let newAccount = new Account(inputtedName, inputtedInitialDeposit);
         bank.addAccount(newAccount);
         displayAccountDetails(bank);      
-    })
+    });
 })
